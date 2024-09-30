@@ -1,12 +1,14 @@
 import cmath
 import numpy as np
 
+from vectors import Vector3D
+
 class Vector1D:
     def __init__(self, x, dims):
         self.dims = dims
-        self.x = x
-        self.magnitude = property(cmath.sqrt(x**2))
-        self.direction = property(lambda: cmath.atan2(0))
+        self.x: float = x
+        self.magnitude: float = cmath.sqrt(x**2)
+        self.direction: float = cmath.atan2(0)
         
     
     def __dotproduct__(self, other) -> float:
@@ -30,3 +32,13 @@ class Vector1D:
     
     def __str__(self):
         return f"<{self.x}>"
+    
+    def __pow__(self, scalar):
+        return Vector1D(self.x**scalar)
+    
+    def project(self, other):
+        dot = self.dotproduct(other) / other.magnitude**2
+        return self * dot
+    
+    def extend(self):
+        return Vector3D(self.x, 0, 0)

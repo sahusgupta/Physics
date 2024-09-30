@@ -6,15 +6,15 @@ class Vector3D(Vector1D):
         super().__init__(x, 3)
         self.y = y
         self.z = z
-        self.magnitude = property(cmath.sqrt(x**2 + y**2 + z**2))
-        self.direction = property(lambda: cmath.atan2(y, x))
+        self.magnitude = cmath.sqrt(x**2 + y**2 + z**2)
+        self.direction = cmath.atan2(y, x)
         
-    def __dotproduct__(self, other) -> float:
+    def dotproduct(self, other) -> float:
         if type(other) is Vector1D:
             return self.x * other.x + self.y * other.y + self.z * other.z;
         else:
             return None
-    def cross_product(self, other):
+    def crossproduct(self, other):
         if type(other) is Vector3D:
             return Vector3D(self.y * other.z - self.z * other.y,
                           self.z * other.x - self.x * other.z,
@@ -43,4 +43,10 @@ class Vector3D(Vector1D):
             raise ZeroDivisionError("Division by zero")
     def __str__(self):
         return f"<{self.x}, {self.y}, {self.z}>"
-        
+    
+    def __pow__(self, scalar):
+        return Vector3D(self.x**scalar, self.y**scalar, self.z**scalar)
+    
+    def project(self, other):
+        dot = self.dotproduct(other) / other.magnitude**2
+        return self * dot
