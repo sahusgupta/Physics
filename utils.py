@@ -16,3 +16,11 @@ def area (vector1, vector2):
 def torque(vector1: Union[Vector2D, Vector3D], vector2: Union[Vector2D, Vector3D]):
     return vector1.crossproduct(vector2).magnitude
 
+def xcomponent2D(res, theta):
+    return res * c.cos(theta)
+
+def ycomponent2D(res, theta):
+    return res * c.sin(theta)
+
+def resultant2D(x, y):
+    return c.sqrt(x**2 + y**2)
